@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BasePart : ScriptableObject
+public abstract class BasePart : MonoBehaviour
 {
     public abstract string WeaponType { get; }
     public abstract float BaseFireRate { get; }

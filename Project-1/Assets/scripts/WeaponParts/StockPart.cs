@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class StockPart : ScriptableObject
+public abstract class StockPart : MonoBehaviour
 {
     public abstract float RecoilRecoveryModifier { get; }
     public abstract float SwayModifier { get; }

@@ -66,5 +66,6 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
     },
-    "dotnet.defaultSolution": "Project-1.sln"
+    "dotnet.defaultSolution": "Project-1.sln",
+    "svn.ignoreMissingSvnWarning": true
 }

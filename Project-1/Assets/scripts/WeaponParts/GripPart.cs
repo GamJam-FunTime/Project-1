@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class GripPart : ScriptableObject
+public abstract class GripPart : MonoBehaviour
 {
     public abstract float RecoilModifier { get; }
     public abstract float ADS_SpeedModifier { get; }

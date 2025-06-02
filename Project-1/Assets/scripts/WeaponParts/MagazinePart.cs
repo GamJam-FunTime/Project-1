@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class MagazinePart : ScriptableObject
+public abstract class MagazinePart : MonoBehaviour
 {
     public abstract int AmmoCapacity { get; }
     public abstract float ReloadTime { get; }

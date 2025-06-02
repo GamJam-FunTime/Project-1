@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BarrelPart : ScriptableObject
@@ -8,5 +9,5 @@ public abstract class BarrelPart : ScriptableObject
     public abstract float Spread { get; }
 
     // Alter projectile effects (piercing, explosive, arc, etc.)
-    public abstract void ApplyBarrelEffects(Projectile projectile);
+    public abstract void MoveProjectile(GameObject projectile);
 }
