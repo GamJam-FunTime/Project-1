@@ -1,11 +1,43 @@
 using UnityEngine;
 
-public abstract class StockPart : MonoBehaviour
+public abstract class StockPart : WeaponPart
 {
-    public abstract float RecoilRecoveryModifier { get; }
-    public abstract float SwayModifier { get; }
-    public abstract float MoveStabilityModifier { get; }
-    public abstract float StaminaHandlingModifier { get; }
+    public StockPartData properties;
 
-    public abstract void ApplyStockLogic(WeaponController weapon);
+    [SerializeField]
+    protected StockPartData minData,
+        maxData;
+
+    void Awake()
+    {
+        properties = new StockPartData(
+            Random.Range(minData.recoilRecoveryModifier, maxData.recoilRecoveryModifier),
+            Random.Range(minData.swayModifier, maxData.swayModifier),
+            Random.Range(minData.moveStabilityModifier, maxData.moveStabilityModifier),
+            Random.Range(minData.staminaHandlingModifier, maxData.staminaHandlingModifier)
+        );
+    }
+
+}
+
+[System.Serializable]
+public class StockPartData
+{
+    public float recoilRecoveryModifier;
+    public float swayModifier;
+    public float moveStabilityModifier;
+    public float staminaHandlingModifier;
+
+    public StockPartData(
+        float recoilRecoveryModifier,
+        float swayModifier,
+        float moveStabilityModifier,
+        float staminaHandlingModifier
+    )
+    {
+        this.recoilRecoveryModifier = recoilRecoveryModifier;
+        this.swayModifier = swayModifier;
+        this.moveStabilityModifier = moveStabilityModifier;
+        this.staminaHandlingModifier = staminaHandlingModifier;
+    }
 }

@@ -1,12 +1,51 @@
 using UnityEngine;
 
-public abstract class BasePart : MonoBehaviour
+public abstract class BasePart : WeaponPart
 {
-    public abstract string WeaponType { get; }
-    public abstract float BaseFireRate { get; }
-    public abstract string ReloadType { get; }
-    public abstract string AmmoType { get; }
+    public BasePartData properties;
 
-    // Core logic or special behavior (e.g., charging, elemental types)
-    public abstract void ApplyBaseLogic(WeaponController weapon);
+    [SerializeField]
+    protected BasePartData minData,
+        maxData;
+
+    void Awake()
+    {
+        properties = new BasePartData(
+            Random.Range(minData.baseFireRate, maxData.baseFireRate)
+        // Add more fields as needed
+        );
+    }
+}
+
+[System.Serializable]
+public class BasePartData
+{
+    public enum weaponType
+    {
+        pistol,
+        rifle,
+        shotgun,
+        smg,
+        lmg,
+        sniper,
+        launcher,
+        melee,
+    }
+    public enum fireMode
+    {
+        single,
+        burst,
+        auto,
+        charge,
+    }
+    public weaponType type;
+    public fireMode mode;
+    public float baseFireRate;
+
+    // Add more fields as needed
+
+    public BasePartData(float baseFireRate)
+    {
+        this.baseFireRate = baseFireRate;
+    }
 }
