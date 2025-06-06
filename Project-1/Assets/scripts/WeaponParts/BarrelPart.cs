@@ -3,7 +3,11 @@ using UnityEngine;
 
 public abstract class BarrelPart : WeaponPart
 {
-    public BarrelPartData properties = null;
+    //min and max data used for random generation
+    //non randomized data goes in minData
+    //randomized data goes in maxData
+
+    public BarrelPartData properties = default;
 
     [SerializeField]
     protected BarrelPartData minData,
@@ -11,7 +15,8 @@ public abstract class BarrelPart : WeaponPart
 
     void Awake()
     {
-        if (properties == null) // only initialize if not already set ie opening a save file does not overwrite existing properties
+        // Only initialize if properties is default (all fields are zero)
+        if (properties.Equals(default(BarrelPartData)))
         {
             properties = new BarrelPartData(
                 Random.Range(minData.rangeModifier, maxData.rangeModifier),
@@ -21,13 +26,10 @@ public abstract class BarrelPart : WeaponPart
             );
         }
     }
-
-    // Alter projectile effects (piercing, explosive, arc, etc.)
-    public abstract void MoveProjectile(GameObject projectile);
 }
 
 [System.Serializable]
-public class BarrelPartData
+public struct BarrelPartData
 {
     public float rangeModifier;
     public float accuracyModifier;

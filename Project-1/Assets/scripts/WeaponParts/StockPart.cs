@@ -2,7 +2,11 @@ using UnityEngine;
 
 public abstract class StockPart : WeaponPart
 {
-    public StockPartData properties;
+    //min and max data used for random generation
+    //non randomized data goes in minData
+    //randomized data goes in maxData
+
+    public StockPartData properties = default;
 
     [SerializeField]
     protected StockPartData minData,
@@ -10,18 +14,20 @@ public abstract class StockPart : WeaponPart
 
     void Awake()
     {
-        properties = new StockPartData(
-            Random.Range(minData.recoilRecoveryModifier, maxData.recoilRecoveryModifier),
-            Random.Range(minData.swayModifier, maxData.swayModifier),
-            Random.Range(minData.moveStabilityModifier, maxData.moveStabilityModifier),
-            Random.Range(minData.staminaHandlingModifier, maxData.staminaHandlingModifier)
-        );
+        if (properties.Equals(default(StockPartData)))
+        {
+            properties = new StockPartData(
+                Random.Range(minData.recoilRecoveryModifier, maxData.recoilRecoveryModifier),
+                Random.Range(minData.swayModifier, maxData.swayModifier),
+                Random.Range(minData.moveStabilityModifier, maxData.moveStabilityModifier),
+                Random.Range(minData.staminaHandlingModifier, maxData.staminaHandlingModifier)
+            );
+        }
     }
-
 }
 
 [System.Serializable]
-public class StockPartData
+public struct StockPartData
 {
     public float recoilRecoveryModifier;
     public float swayModifier;

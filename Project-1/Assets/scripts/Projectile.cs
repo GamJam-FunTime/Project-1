@@ -1,6 +1,7 @@
+using System.Xml.Serialization;
 using UnityEngine;
 
-public class Projectile
+public class Projectile : MonoBehaviour
 {
     public ProjectileData projectileData;
 
@@ -31,6 +32,42 @@ public class Projectile
             )
         );
     }
+
+    void onHitEntity()
+    {
+        projectileData.weaponController.basePart.onHitEntity(gameObject);
+        projectileData.weaponController.barrel.onHitEntity(gameObject);
+        projectileData.weaponController.grip.onHitEntity(gameObject);
+        projectileData.weaponController.stock.onHitEntity(gameObject);
+        projectileData.weaponController.magazine.onHitEntity(gameObject);
+    }
+
+    void onHitEnvironment()
+    {
+        projectileData.weaponController.basePart.onHitEnvironment(gameObject);
+        projectileData.weaponController.barrel.onHitEnvironment(gameObject);
+        projectileData.weaponController.grip.onHitEnvironment(gameObject);
+        projectileData.weaponController.stock.onHitEnvironment(gameObject);
+        projectileData.weaponController.magazine.onHitEnvironment(gameObject);
+    }
+
+    void onTravel()
+    {
+        projectileData.weaponController.basePart.onTravelEffect(gameObject);
+        projectileData.weaponController.barrel.onTravelEffect(gameObject);
+        projectileData.weaponController.grip.onTravelEffect(gameObject);
+        projectileData.weaponController.stock.onTravelEffect(gameObject);
+        projectileData.weaponController.magazine.onTravelEffect(gameObject);
+    }
+
+    void onExpire()
+    {
+        projectileData.weaponController.basePart.onExpireEffect(gameObject);
+        projectileData.weaponController.barrel.onExpireEffect(gameObject);
+        projectileData.weaponController.grip.onExpireEffect(gameObject);
+        projectileData.weaponController.stock.onExpireEffect(gameObject);
+        projectileData.weaponController.magazine.onExpireEffect(gameObject);
+    }
 }
 
 [System.Serializable]
@@ -52,6 +89,8 @@ public struct ProjectileData
     public float recoil;
     public Sprite sprite;
 
+    public WeaponController weaponController;
+
     // Constructor to initialize the ProjectileData
     public ProjectileData(
         float speed,
@@ -68,7 +107,8 @@ public struct ProjectileData
         float bounciness,
         float fireRate,
         float recoil,
-        Sprite sprite
+        Sprite sprite,
+        WeaponController weaponController = null
     )
     {
         this.speed = speed;
@@ -86,5 +126,6 @@ public struct ProjectileData
         this.fireRate = fireRate;
         this.recoil = recoil;
         this.sprite = sprite;
+        this.weaponController = weaponController;
     }
 }
