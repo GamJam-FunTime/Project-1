@@ -13,4 +13,6 @@ public abstract class WeaponPart : MonoBehaviour
     public virtual void onExpireEffect(GameObject projectile) { }
 
     public virtual void onTravelEffect(GameObject projectile) { }
+
+    public virtual void moveProjectile(GameObject projectile) { }
 }

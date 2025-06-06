@@ -424,7 +424,7 @@ Transform:
   m_GameObject: {fileID: 1294483015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.026, y: 1.333, z: 0}
+  m_LocalPosition: {x: 0.837, y: 1.617, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -541,24 +541,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4fa3a5e581b8f489fdc3a4d279bc96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projData:
-    speed: 10
-    damage: 5
-    lifetime: 2
-    range: 20
-    gravity: 0
-    drag: 0.1
-    spread: 0.05
-    size: 1
-    rotation: 0
-    scale: 1
-    mass: 1
-    bounciness: 0.2
-    fireRate: 0.5
-    recoil: 1
-    sprite: {fileID: 0}
-    weaponController: {fileID: 0}
-  barrel: {fileID: 0}
+  projSpeed: 10
+  projDamage: 5
+  projLifetime: 2
+  projRange: 20
+  projGravity: 0
+  projDrag: 0.1
+  projSpread: 0.05
+  projSize: 1
+  projRotation: 0
+  projScale: 1
+  projMass: 1
+  projBounciness: 0.2
+  projFireRate: 0.5
+  projRecoil: 1
+  projSprite: {fileID: 0}
+  barrel: {fileID: 1294483019}
   magazine: {fileID: 0}
   stock: {fileID: 0}
   basePart: {fileID: 0}

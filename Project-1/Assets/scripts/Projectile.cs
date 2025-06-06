@@ -1,84 +1,14 @@
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public ProjectileData projectileData;
-
-    Projectile(ProjectileData projectileData)
-    {
-        this.projectileData = projectileData;
-    }
-
-    public Projectile Clone()
-    {
-        return new Projectile(
-            projectileData = new ProjectileData(
-                projectileData.speed,
-                projectileData.damage,
-                projectileData.lifetime,
-                projectileData.range,
-                projectileData.gravity,
-                projectileData.drag,
-                projectileData.spread,
-                projectileData.size,
-                projectileData.rotation,
-                projectileData.scale,
-                projectileData.mass,
-                projectileData.bounciness,
-                projectileData.fireRate,
-                projectileData.recoil,
-                projectileData.sprite
-            )
-        );
-    }
-
-    void onHitEntity()
-    {
-        projectileData.weaponController.basePart.onHitEntity(gameObject);
-        projectileData.weaponController.barrel.onHitEntity(gameObject);
-        projectileData.weaponController.grip.onHitEntity(gameObject);
-        projectileData.weaponController.stock.onHitEntity(gameObject);
-        projectileData.weaponController.magazine.onHitEntity(gameObject);
-    }
-
-    void onHitEnvironment()
-    {
-        projectileData.weaponController.basePart.onHitEnvironment(gameObject);
-        projectileData.weaponController.barrel.onHitEnvironment(gameObject);
-        projectileData.weaponController.grip.onHitEnvironment(gameObject);
-        projectileData.weaponController.stock.onHitEnvironment(gameObject);
-        projectileData.weaponController.magazine.onHitEnvironment(gameObject);
-    }
-
-    void onTravel()
-    {
-        projectileData.weaponController.basePart.onTravelEffect(gameObject);
-        projectileData.weaponController.barrel.onTravelEffect(gameObject);
-        projectileData.weaponController.grip.onTravelEffect(gameObject);
-        projectileData.weaponController.stock.onTravelEffect(gameObject);
-        projectileData.weaponController.magazine.onTravelEffect(gameObject);
-    }
-
-    void onExpire()
-    {
-        projectileData.weaponController.basePart.onExpireEffect(gameObject);
-        projectileData.weaponController.barrel.onExpireEffect(gameObject);
-        projectileData.weaponController.grip.onExpireEffect(gameObject);
-        projectileData.weaponController.stock.onExpireEffect(gameObject);
-        projectileData.weaponController.magazine.onExpireEffect(gameObject);
-    }
-}
-
-[System.Serializable]
-public struct ProjectileData
-{
     public float speed;
+    public Vector2 direction;
     public float damage;
+    public float age;
     public float lifetime;
     public float range;
     public float gravity;
-    public float drag;
     public float spread;
     public float size;
     public float rotation;
@@ -89,16 +19,16 @@ public struct ProjectileData
     public float recoil;
     public Sprite sprite;
 
+    public System.Func<Projectile, float, Vector2> movementPath;
+
     public WeaponController weaponController;
 
-    // Constructor to initialize the ProjectileData
-    public ProjectileData(
+    public Projectile(
         float speed,
         float damage,
         float lifetime,
         float range,
         float gravity,
-        float drag,
         float spread,
         float size,
         float rotation,
@@ -108,7 +38,8 @@ public struct ProjectileData
         float fireRate,
         float recoil,
         Sprite sprite,
-        WeaponController weaponController = null
+        WeaponController weaponController = null,
+        float age = 0f
     )
     {
         this.speed = speed;
@@ -116,7 +47,6 @@ public struct ProjectileData
         this.lifetime = lifetime;
         this.range = range;
         this.gravity = gravity;
-        this.drag = drag;
         this.spread = spread;
         this.size = size;
         this.rotation = rotation;
@@ -127,5 +57,63 @@ public struct ProjectileData
         this.recoil = recoil;
         this.sprite = sprite;
         this.weaponController = weaponController;
+        this.age = age;
+    }
+
+    public Projectile Clone()
+    {
+        return new Projectile(
+            speed,
+            damage,
+            lifetime,
+            range,
+            gravity,
+            spread,
+            size,
+            rotation,
+            scale,
+            mass,
+            bounciness,
+            fireRate,
+            recoil,
+            sprite,
+            weaponController
+        );
+    }
+
+    void onHitEntity()
+    {
+        weaponController.basePart.onHitEntity(gameObject);
+        weaponController.barrel.onHitEntity(gameObject);
+        weaponController.grip.onHitEntity(gameObject);
+        weaponController.stock.onHitEntity(gameObject);
+        weaponController.magazine.onHitEntity(gameObject);
+    }
+
+    void onHitEnvironment()
+    {
+        weaponController.basePart.onHitEnvironment(gameObject);
+        weaponController.barrel.onHitEnvironment(gameObject);
+        weaponController.grip.onHitEnvironment(gameObject);
+        weaponController.stock.onHitEnvironment(gameObject);
+        weaponController.magazine.onHitEnvironment(gameObject);
+    }
+
+    void onTravel()
+    {
+        weaponController.basePart.onTravelEffect(gameObject);
+        weaponController.barrel.onTravelEffect(gameObject);
+        weaponController.grip.onTravelEffect(gameObject);
+        weaponController.stock.onTravelEffect(gameObject);
+        weaponController.magazine.onTravelEffect(gameObject);
+    }
+
+    void onExpire()
+    {
+        weaponController.basePart.onExpireEffect(gameObject);
+        weaponController.barrel.onExpireEffect(gameObject);
+        weaponController.grip.onExpireEffect(gameObject);
+        weaponController.stock.onExpireEffect(gameObject);
+        weaponController.magazine.onExpireEffect(gameObject);
     }
 }

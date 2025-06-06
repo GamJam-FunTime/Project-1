@@ -1,3 +1,6 @@
 using UnityEngine;
 
-public class BasicBase : BasePart { }
+public class BasicBase : BasePart
+{ 
+    
+}
