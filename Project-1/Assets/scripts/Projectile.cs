@@ -19,11 +19,11 @@ public class Projectile : MonoBehaviour
     public float recoil;
     public Sprite sprite;
 
-    public System.Func<Projectile, float, Vector2> movementPath;
+    public System.Func<Projectile, float, Vector3> movementPath;
 
     public WeaponController weaponController;
 
-    public Projectile(
+    public void Initialize(
         float speed,
         float damage,
         float lifetime,
@@ -38,8 +38,7 @@ public class Projectile : MonoBehaviour
         float fireRate,
         float recoil,
         Sprite sprite,
-        WeaponController weaponController = null,
-        float age = 0f
+        WeaponController weaponController
     )
     {
         this.speed = speed;
@@ -57,31 +56,12 @@ public class Projectile : MonoBehaviour
         this.recoil = recoil;
         this.sprite = sprite;
         this.weaponController = weaponController;
-        this.age = age;
+
+        age = 0f;
+
     }
 
-    public Projectile Clone()
-    {
-        return new Projectile(
-            speed,
-            damage,
-            lifetime,
-            range,
-            gravity,
-            spread,
-            size,
-            rotation,
-            scale,
-            mass,
-            bounciness,
-            fireRate,
-            recoil,
-            sprite,
-            weaponController
-        );
-    }
-
-    void onHitEntity()
+    public void onHitEntity()
     {
         weaponController.basePart.onHitEntity(gameObject);
         weaponController.barrel.onHitEntity(gameObject);
@@ -90,7 +70,7 @@ public class Projectile : MonoBehaviour
         weaponController.magazine.onHitEntity(gameObject);
     }
 
-    void onHitEnvironment()
+    public void onHitEnvironment()
     {
         weaponController.basePart.onHitEnvironment(gameObject);
         weaponController.barrel.onHitEnvironment(gameObject);
@@ -99,7 +79,7 @@ public class Projectile : MonoBehaviour
         weaponController.magazine.onHitEnvironment(gameObject);
     }
 
-    void onTravel()
+    public void onTravel()
     {
         weaponController.basePart.onTravelEffect(gameObject);
         weaponController.barrel.onTravelEffect(gameObject);
@@ -108,7 +88,7 @@ public class Projectile : MonoBehaviour
         weaponController.magazine.onTravelEffect(gameObject);
     }
 
-    void onExpire()
+    public void onExpire()
     {
         weaponController.basePart.onExpireEffect(gameObject);
         weaponController.barrel.onExpireEffect(gameObject);
@@ -116,4 +96,39 @@ public class Projectile : MonoBehaviour
         weaponController.stock.onExpireEffect(gameObject);
         weaponController.magazine.onExpireEffect(gameObject);
     }
+
+    public void Expire()
+    {
+        onExpire();
+        Reset();
+    }
+
+    private void Reset()
+    {
+        gameObject.SetActive(false);
+        transform.position = Vector3.zero;
+        weaponController.projectilePool.Enqueue(this);
+
+        speed = 0f;
+        direction = Vector2.zero;
+        damage = 0f;
+        age = 0f;
+        lifetime = 0f;
+        range = 0f;
+        gravity = 0f;
+        spread = 0f;
+        size = 0f;
+        rotation = 0f;
+        scale = 0f;
+        mass = 0f;
+        bounciness = 0f;
+        fireRate = 0f;
+        recoil = 0f;
+        sprite = null;
+        movementPath = null;
+        weaponController = null;
+
+
+    }
+
 }

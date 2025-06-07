@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using System.Collections.Generic;
 
 public class WeaponController : MonoBehaviour
 {
@@ -34,8 +35,14 @@ public class WeaponController : MonoBehaviour
     private float projRecoil = 1f;
     [SerializeField]
     private Sprite projSprite = null; // Placeholder for the sprite, can be set later
-    
+
     private Func<Projectile, float, Vector2> movementPath;
+
+    public Queue<Projectile> projectilePool = new();
+
+
+    private ProjectileManager _projectileManager;
+    public ProjectileManager ProjectileManager => _projectileManager;
 
 
     [Header("Weapon Parts")]
@@ -50,6 +57,7 @@ public class WeaponController : MonoBehaviour
 
     void Start()
     {
+        _projectileManager = FindAnyObjectByType<ProjectileManager>();
         // fireAction = InputSystem.actions.FindAction("Attack");
         fireAction.Enable();
         if (barrel != null || magazine != null || stock != null || basePart != null || grip != null)
@@ -64,7 +72,6 @@ public class WeaponController : MonoBehaviour
 
     void Update()
     {
-        print("Update Function Called");
         // Check if the fire action is triggered
         if (fireAction.WasPressedThisFrame())
         {
@@ -115,5 +122,44 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    void Fire() { }
+    void Fire()
+    {
+        Projectile projectile;
+        if (projectilePool.Count > 0)
+        {
+            projectile = projectilePool.Dequeue();
+        }
+        else
+        {
+            GameObject projectileObj = new GameObject("Projectile");
+            projectileObj.AddComponent<SphereCollider>();
+            projectileObj.AddComponent<SpriteRenderer>();
+            projectile = projectileObj.AddComponent<Projectile>();
+            projectile.gameObject.SetActive(false);
+            ProjectileManager.AddProjectile(projectile);
+        }
+        projectile.Initialize(
+            projSpeed,
+            projDamage,
+            projLifetime,
+            projRange,
+            projGravity,
+            projSpread,
+            projSize,
+            projRotation,
+            projScale,
+            projMass,
+            projBounciness,
+            projFireRate,
+            projRecoil,
+            projSprite,
+            this
+        );
+        projectile.transform.position = transform.position;
+        projectile.movementPath = Paths.StraightPath; // Set the movement path function
+        projectile.gameObject.GetComponent<SpriteRenderer>().sprite = projSprite;
+
+        projectile.direction = transform.right; // Assuming the weapon's forward direction is up
+        projectile.gameObject.SetActive(true);
+    }
 }
