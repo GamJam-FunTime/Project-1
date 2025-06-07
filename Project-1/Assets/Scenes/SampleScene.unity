@@ -119,6 +119,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &324410753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 324410755}
+  - component: {fileID: 324410754}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &324410754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324410753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9c6bcddb197784e84fd7244b256e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectiles: []
+--- !u!4 &324410755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324410753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,8 +398,10 @@ GameObject:
   - component: {fileID: 1294483019}
   - component: {fileID: 1294483020}
   - component: {fileID: 1294483021}
+  - component: {fileID: 1294483023}
+  - component: {fileID: 1294483022}
   m_Layer: 0
-  m_Name: basicBarrel
+  m_Name: basicWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -457,7 +504,7 @@ MonoBehaviour:
     rangeModifier: 10
     accuracyModifier: 3
     spread: 10
-    speedModifier: 0
+    speedModifier: 5
 --- !u!114 &1294483020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,7 +547,7 @@ MonoBehaviour:
     ammoCapacity: 0
     reloadTime: 0
     magazineType: 0
-  projectileSprite: {fileID: 0}
+  projectileSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   minData:
     ammoCapacity: 0
     reloadTime: 0
@@ -509,6 +556,59 @@ MonoBehaviour:
     ammoCapacity: 0
     reloadTime: 0
     magazineType: 0
+--- !u!114 &1294483022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294483015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502fe3cad194d3143a9ffe52551f28fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  properties:
+    recoilModifier: 0
+    adsSpeedModifier: 0
+    aimMoveSpeedModifier: 0
+  minData:
+    recoilModifier: 0
+    adsSpeedModifier: 0
+    aimMoveSpeedModifier: 0
+  maxData:
+    recoilModifier: 0
+    adsSpeedModifier: 0
+    aimMoveSpeedModifier: 0
+--- !u!114 &1294483023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294483015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e50bea0f4e9f40349884fc7356abfd3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  properties:
+    recoilRecoveryModifier: 0
+    swayModifier: 0
+    moveStabilityModifier: 0
+    staminaHandlingModifier: 0
+  minData:
+    recoilRecoveryModifier: 0
+    swayModifier: 0
+    moveStabilityModifier: 0
+    staminaHandlingModifier: 0
+  maxData:
+    recoilRecoveryModifier: 0
+    swayModifier: 0
+    moveStabilityModifier: 0
+    staminaHandlingModifier: 0
 --- !u!1 &1324425698
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,12 +655,12 @@ MonoBehaviour:
   projBounciness: 0.2
   projFireRate: 0.5
   projRecoil: 1
-  projSprite: {fileID: 0}
+  projSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   barrel: {fileID: 1294483019}
-  magazine: {fileID: 0}
-  stock: {fileID: 0}
-  basePart: {fileID: 0}
-  grip: {fileID: 0}
+  magazine: {fileID: 1294483021}
+  stock: {fileID: 1294483023}
+  basePart: {fileID: 1294483020}
+  grip: {fileID: 1294483022}
   fireAction:
     m_Name: Fire
     m_Type: 0
@@ -663,7 +763,7 @@ Transform:
   m_GameObject: {fileID: 1324425698}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.93, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -677,3 +777,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1324425703}
   - {fileID: 1294483018}
+  - {fileID: 324410755}
