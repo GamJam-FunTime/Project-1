@@ -24,13 +24,13 @@ public static class Paths
 
     public static Vector3 SineWavePath(Projectile p, float dt)
     {
-        float frequency = 5f;
-        float amplitude = 0.5f;
+        float frequency = 10f;
+        float amplitude = 0.1f;
 
         Vector2 perp = new Vector2(-p.direction.y, p.direction.x);
-        Vector2 offset = perp * Mathf.Sin(p.age * frequency) * amplitude;
+        Vector2 offset = amplitude * Mathf.Cos(p.age * frequency) * perp;
 
-        Vector2 move = p.direction * p.speed * dt;
+        Vector2 move = dt * p.speed * p.direction;
         Vector2 newPos = (Vector2)p.transform.position + move + offset;
 
         return new Vector3(newPos.x, newPos.y, 0f);

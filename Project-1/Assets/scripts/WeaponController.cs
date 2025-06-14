@@ -66,7 +66,7 @@ public class WeaponController : MonoBehaviour
         }
         else
         {
-            // logic for missing parts maybe some animation for failure to combine.
+            Debug.LogWarning("Weapon parts are not properly assigned. Please assign at least one part to the weapon.");
         }
     }
 
@@ -128,15 +128,11 @@ public class WeaponController : MonoBehaviour
         if (projectilePool.Count > 0)
         {
             projectile = projectilePool.Dequeue();
+            if (projectile == null || projectile.gameObject == null) projectile = GenerateProjectile();
         }
         else
         {
-            GameObject projectileObj = new GameObject("Projectile");
-            projectileObj.AddComponent<SphereCollider>();
-            projectileObj.AddComponent<SpriteRenderer>();
-            projectile = projectileObj.AddComponent<Projectile>();
-            projectile.gameObject.SetActive(false);
-            ProjectileManager.AddProjectile(projectile);
+            projectile = GenerateProjectile();
         }
         projectile.Initialize(
             projSpeed,
@@ -156,10 +152,21 @@ public class WeaponController : MonoBehaviour
             this
         );
         projectile.transform.position = transform.position;
-        projectile.movementPath = Paths.StraightPath; // Set the movement path function
+        projectile.movementPath = Paths.SpiralPath; // Set the movement path function
         projectile.gameObject.GetComponent<SpriteRenderer>().sprite = projSprite;
 
         projectile.direction = transform.right; // Assuming the weapon's forward direction is up
         projectile.gameObject.SetActive(true);
+    }
+
+    Projectile GenerateProjectile()
+    {
+        GameObject projectileObj = new GameObject("Projectile");
+        projectileObj.AddComponent<SphereCollider>();
+        projectileObj.AddComponent<SpriteRenderer>();
+        Projectile projectile = projectileObj.AddComponent<Projectile>();
+        projectile.gameObject.SetActive(false);
+        ProjectileManager.AddProjectile(projectile);
+        return projectile;
     }
 }

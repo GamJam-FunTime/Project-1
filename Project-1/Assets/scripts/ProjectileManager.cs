@@ -16,7 +16,7 @@ public class ProjectileManager : MonoBehaviour
                 {
                     p.transform.position = p.movementPath(p, Time.deltaTime);
                     p.age += Time.deltaTime;
-                    if (p.age >= p.lifetime || Vector2.Distance(p.weaponController.transform.position, p.transform.position) >= p.range)
+                    if (p.age >= p.lifetime || (p.range != -1 && Vector2.Distance(p.weaponController.transform.position, p.transform.position) >= p.range))
                     {
                         p.Expire();
                     }
